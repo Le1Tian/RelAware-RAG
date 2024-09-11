@@ -7,7 +7,6 @@ import torch
 from src.data_augmentation.embeddings.data import TACREDDataset
 from src.data_augmentation.embeddings.model import UniSTModel
 
-"""Created by: LeiTian"""
 import os
 import sys
 import json
@@ -59,8 +58,8 @@ def compute_sentence(data):
 
     print("The embeddings will be compted for {0} sentences".format(len(data)))
     # infer
-    model.eval()  # 设置模型为评估模式
-    with torch.no_grad():  # 禁用梯度计算
+    model.eval()
+    with torch.no_grad():
         for i, line in enumerate(data):
             sent, pos, neg = line[0], line[1], line[2]
             sent_inputs = tokenizer(sent, padding=True, truncation=True, max_length=max_sent_length,
@@ -81,7 +80,6 @@ def compute_sentence(data):
 
             sent_embedding = model(**inputs)[1]
 
-            # # 计算实体嵌入
             # rel_embed = RE(clean_sent)
             sent_embeddings.append(sent_embedding)
             # sent_embeddings.append(embeddings)
@@ -103,7 +101,7 @@ if __name__ == "__main__":
 
     file_config = configparser.ConfigParser()
     # config.read(PREFIX_PATH+"config.ini")
-    file_config.read("/home/tianlei/work/RelAware-RAG/src/config/config_re_tacred.ini")
+    file_config.read("/home/tianlei/work/RelAware-RAG/src/config/config.ini")
 
     input_file = file_config["EMBEDDING"]["input_embedding_path"]
     output_file = file_config["EMBEDDING"]["output_embedding_path"]

@@ -31,7 +31,6 @@ def write_json(path, data):
 
 def compute_similarity(test_data, train_data, train_embeddings, test_embeddings):
     """
-    重写的相似度计算函数
     Compute Consine similarity between test and train embeddings
 
     Returns:
@@ -65,7 +64,7 @@ def compute_similarity(test_data, train_data, train_embeddings, test_embeddings)
             context = train_sentence
             ss, se = train_data[index]['subj_start'], train_data[index]['subj_end']
             os, oe = train_data[index]['obj_start'], train_data[index]['obj_end']
-            head, tail = train_data[index]['token'][ss: se + 1], train_data[index]['token'][os: oe + 1]  # 根据 两个实体的位置 获取实体name信息 e1:['his'] e2:['him']
+            head, tail = train_data[index]['token'][ss: se + 1], train_data[index]['token'][os: oe + 1]
             head = " ".join([token for token in head])
             tail = " ".join([token for token in tail])
             sim_sentence.append(context)
@@ -91,7 +90,6 @@ def compute_similarity(test_data, train_data, train_embeddings, test_embeddings)
 
 def compute_similarity_new_for_semeval(test_data, train_data, train_embeddings, test_embeddings):
     """
-    重写的相似度计算函数
     Compute Consine similarity between test and train embeddings
 
     Args:
@@ -148,40 +146,6 @@ def compute_similarity_new_for_semeval(test_data, train_data, train_embeddings, 
 
     return test_similarities
 
-def semeval_compute_similarity(test_data, train_data, train_embeddings, test_embeddings):
-    """Compute Consine similarity between test and train embeddings for semeval dataset
-    Args:
-        test_data (list): list of sentences
-        train_data (list): list of sentences
-        train_embeddings (list): list of sentence embeddings
-        test_embeddings (list): list of sentence embeddings
-    Returns:
-        list: list of similarity scores along with similar sentence and train data index
-    """
-    
-    similarities = []
-
-    for test_index, _ in enumerate(test_data):
-        test_emb = test_embeddings[test_index]
-        train_similarities = []
-
-        for train_index, train_line in enumerate(train_data):
-            train_emb = train_embeddings[train_index]
-            sim = np.dot(test_emb,train_emb)/(norm(test_emb)*norm(train_emb))
-            train_similarities.append({"train":train_index, "simscore":sim, "sentence":train_line})
-        
-        train_similarities = sorted(train_similarities, key=lambda x: x["simscore"], reverse=True)
-            
-        # similarities.append({"test":test_index, "similar_sentence":train_similarities[0]['sentence'],"train_idex":train_similarities[0]['train'], "simscore":float(train_similarities[0]['simscore'])})
-        similarities.append({"test": test_index, "similar_sentence": train_similarities[0]['sentence'], "train_idex": train_similarities[0]['train'], "simscore": float(train_similarities[0]['simscore']),
-                             "similar_sentence1": train_similarities[1]['sentence'],
-                             "train_idex1": train_similarities[1]['train'],
-                             "simscore1": float(train_similarities[1]['simscore'])
-                             })
-
-        print("test index: ", test_index)
-
-    return similarities
 
 
 def main(test_file, train_file, train_emb, test_emb, output_sim_path, dataset="semeval"):
@@ -208,7 +172,7 @@ if __name__ == "__main__":
 
     config = configparser.ConfigParser()
     # config.read(PREFIX_PATH+"config.ini")
-    config.read('/home/tianlei/sshCode/RelAware-RAG/src/config/config_tacred.ini')
+    config.read('/home/tianlei/sshCode/RelAware-RAG/src/config/config.ini')
 
     test_file = config["SIMILARITY"]["test_file"]
     train_file = config["SIMILARITY"]["train_file"]

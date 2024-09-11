@@ -1,5 +1,4 @@
 """Generates responses for prompts using a language model defined in Hugging Face."""
-"""Created by: Sefika"""
 
 
 import torch
@@ -11,7 +10,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 class LLM(object):
     
     # def __init__(self, model_id="google/flan-t5-xl"):
-    def __init__(self, model_id="/home/tianlei/sshCode/model/google/flan-t5-xl"):
+    def __init__(self, model_id="flan-t5-xl"):
         """
         Initialize the LLM model
         Args:
@@ -21,7 +20,7 @@ class LLM(object):
         self.maxmem={i:f'{int(torch.cuda.mem_get_info()[0]/1024**3)-2}GB' for i in range(1)}
         self.maxmem['cpu']='300GB'
         # if model_id=="google/flan-t5-xl":
-        if model_id == "/home/tianlei/sshCode/model/google/flan-t5-xl" or model_id == "/home/tianlei/sshCode/model/google/flan-t5-xxl":
+        if model_id == "flan-t5-xl" or model_id == "flan-t5-xxl":
             self.model, self.tokenizer = self.get_model(model_id)
         else: 
             self.model, self.tokenizer = self.get_model_decoder(model_id)

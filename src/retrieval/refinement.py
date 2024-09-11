@@ -21,9 +21,9 @@ def clean_t5_response(dataset_name, test_data, test_results, relations):
         value = relation
         if key not in targets:
             targets[key] = value
-    # 把relation 转换成字典格式： ["founded":"org:founded", "subsidiaries":"org:subsidiaries",...]
+    # Convert relation to dictionary format ["founded":"org:founded", "subsidiaries":"org:subsidiaries",...]
 
-    relations = [relation.split(" ")[-1].split(":")[-1].strip() for relation in relations]  # relation保留target字典的key ['founded', 'subsidiaries', ...]
+    relations = [relation.split(" ")[-1].split(":")[-1].strip() for relation in relations]  # relation holds the key of the target dictionary ['founded', 'subsidiaries', ...]
 
     for i in range(0,len(test_results)):
         test = test_results[i][0].split(" ")[-1].split(":")[-1].strip()
@@ -121,9 +121,9 @@ def find_relations_inanswer(dataset_name, data, responses, relations):
         if len(relation_types) == 0:
             relation_types.append("")
 
-        clean_data[str(i)] =  "no_relation" if relation_types[0] == "no relation" else relation_types[0]
+        clean_data[str(i)] = "no_relation" if relation_types[0] == "no relation" else relation_types[0]
 
-    write_json("/home/tianlei/sshCode/RAG4RE/results/llama2_7b/returned_responses/llama_7b_tacred_simple_clean.json", clean_data)
+    write_json("/home/tianlei/sshCode/RelAware-RAG/results/llama2_7b/returned_responses/llama_7b_tacred_simple_clean.json", clean_data)
     preds = []
     if dataset_name != "semeval":
         for i, sentence in enumerate(data):
@@ -138,7 +138,7 @@ def find_relations_inanswer(dataset_name, data, responses, relations):
             else:
                 preds.append(clean_data[str(i)])
     else:
-        preds =  clean_data
+        pass
 
     return preds 
 

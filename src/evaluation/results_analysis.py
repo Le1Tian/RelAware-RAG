@@ -66,7 +66,7 @@ def compute_scores(predictions, ground_truths, labels):
 if __name__ == "__main__":
   
     config = configparser.ConfigParser()
-    config.read("/home/tianlei/sshCode/RAG4RE/src/config/config_tacred.ini")
+    config.read("/home/tianlei/sshCode/RelAware-RAG/src/config/config.ini")
     # config.read(PREFIX_PATH+"config.ini")
     prompt_type = config["SETTINGS"]["prompt_type"]
     dataset = config["SETTINGS"]["prompt_type"]
