@@ -1,4 +1,4 @@
-# RelAware-RAG
+# RelAwareRAG
 
 The repository consists of the source codes of "Enhancing Relation Extraction by Relation Awareness-Based Retrieval Augmented Generation" paper.
 
